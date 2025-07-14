@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Feedback System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .login-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .feedback-section {
+            display: none;
+        }
+
+        .employee-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .employee-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .employee-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .rating-input {
+            width: 80px;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 10px;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .current-user {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #28a745;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .submit-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .reason-section {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .reason-section textarea {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Employee Feedback System</h1>
+            <p>Rate your colleagues to help improve our workplace</p>
+        </div>
+
+        <div class="login-section" id="loginSection">
+            <h2>Employee Login</h2>
+            <div class="form-group">
+                <label for="employeeName">Your Name:</label>
+                <input type="text" id="employeeName" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="employeeNumber">Your Employee Number:</label>
+                <input type="number" id="employeeNumber" placeholder="Enter your employee number (1-30)">
+            </div>
+            <button class="btn" onclick="login()">Start Feedback</button>
+            <div class="message error" id="loginError"></div>
+        </div>
+
+        <div class="feedback-section" id="feedbackSection">
+            <div class="current-user" id="currentUser"></div>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalEmployees">29</div>
+                    <div class="stat-label">Employees to Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="completedRatings">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="remainingRatings">29</div>
+                    <div class="stat-label">Remaining</div>
+                </div>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <h3>Rate Your Colleagues (1-10 scale)</h3>
+            <div id="employeeList"></div>
+
+            <div class="submit-section">
+                <button class="btn" onclick="submitFeedback()">Submit All Feedback</button>
+            </div>
+            
+            <div class="message success" id="successMessage"></div>
+            <div class="message error" id="feedbackError"></div>
+        </div>
+    </div>
+
+    <script>
+        // Employee data - 30 employees
+        const employees = [
+            {id: 1, name: 'John Smith', number: 1},
+            {id: 2, name: 'Jane Johnson', number: 2},
+            {id: 3, name: 'Mike Williams', number: 3},
+            {id: 4, name: 'Sarah Brown', number: 4},
+            {id: 5, name: 'David Jones', number: 5},
+            {id: 6, name: 'Lisa Garcia', number: 6},
+            {id: 7, name: 'Chris Miller', number: 7},
+            {id: 8, name: 'Anna Davis', number: 8},
+            {id: 9, name: 'Mark Rodriguez', number: 9},
+            {id: 10, name: 'Emily Martinez', number: 10},
+            {id: 11, name: 'James Hernandez', number: 11},
+            {id: 12, name: 'Maria Lopez', number: 12},
+            {id: 13, name: 'Robert Gonzalez', number: 13},
+            {id: 14, name: 'Jennifer Wilson', number: 14},
+            {id: 15, name: 'William Anderson', number: 15},
+            {id: 16, name: 'Linda Thomas', number: 16},
+            {id: 17, name: 'Richard Taylor', number: 17},
+            {id: 18, name: 'Patricia Moore', number: 18},
+            {id: 19, name: 'Charles Jackson', number: 19},
+            {id: 20, name: 'Barbara Martin', number: 20},
+            {id: 21, name: 'Joseph Lee', number: 21},
+            {id: 22, name: 'Elizabeth Perez', number: 22},
+            {id: 23, name: 'Thomas Thompson', number: 23},
+            {id: 24, name: 'Susan White', number: 24},
+            {id: 25, name: 'Daniel Harris', number: 25},
+            {id: 26, name: 'Jessica Sanchez', number: 26},
+            {id: 27, name: 'Matthew Clark', number: 27},
+            {id: 28, name: 'Nancy Ramirez', number: 28},
+            {id: 29, name: 'Anthony Lewis', number: 29},
+            {id: 30, name: 'Dorothy Robinson', number: 30}
+        ];
+
+        let currentUser = null;
+        let ratings = {};
+        let reasons = {};
+
+        function login() {
+            const name = document.getElementById('employeeName').value.trim();
+            const number = parseInt(document.getElementById('employeeNumber').value);
+            
+            const errorDiv = document.getElementById('loginError');
+            
+            if (!name) {
+                showMessage(errorDiv, 'Please enter your name', 'error');
+                return;
+            }
+            
+            if (!number || number < 1 || number > 30) {
+                showMessage(errorDiv, 'Please enter a valid employee number (1-30)', 'error');
+                return;
+            }
+            
+            const employee = employees.find(emp => emp.number === number);
+            
+            if (!employee) {
+                showMessage(errorDiv, 'Employee number not found', 'error');
+                return;
+            }
+            
+            if (employee.name.toLowerCase() !== name.toLowerCase()) {
+                showMessage(errorDiv, 'Name does not match the employee number', 'error');
+                return;
+            }
+            
+            currentUser = employee;
+            hideMessage(errorDiv);
+            showFeedbackSection();
+        }
+
+        function showFeedbackSection() {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('feedbackSection').style.display = 'block';
+            
+            document.getElementById('currentUser').innerHTML = `
+                <strong>Welcome, ${currentUser.name}!</strong><br>
+                Employee Number: ${currentUser.number}
+            `;
+            
+            const otherEmployees = employees.filter(emp => emp.id !== currentUser.id);
+            const employeeListDiv = document.getElementById('employeeList');
+            
+            employeeListDiv.innerHTML = otherEmployees.map(emp => `
+                <div class="employee-card">
+                    <div class="employee-info">
+                        <div>
+                            <div class="employee-name">${emp.name}</div>
+                            <div class="employee-number">Employee #${emp.number}</div>
+                        </div>
+                        <div>
+                            <label for="rating_${emp.id}">Rating:</label>
+                            <input type="number" id="rating_${emp.id}" class="rating-input" 
+                                   min="1" max="10" placeholder="1-10" 
+                                   onchange="updateRating(${emp.id}, this.value)">
+                        </div>
+                    </div>
+                    <div class="reason-section" id="reason_section_${emp.id}">
+                        <label for="reason_${emp.id}">Reason for low score (required for ratings ≤ 3):</label>
+                        <textarea id="reason_${emp.id}" placeholder="Please explain why you gave this low rating..." 
+                                onchange="updateReason(${emp.id}, this.value)"></textarea>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateStats();
+        }
+
+        function updateRating(employeeId, rating) {
+            const ratingValue = parseInt(rating);
+            const reasonSection = document.getElementById(`reason_section_${employeeId}`);
+            
+            if (rating && ratingValue >= 1 && ratingValue <= 10) {
+                ratings[employeeId] = ratingValue;
+                
+                if (ratingValue <= 3) {
+                    reasonSection.style.display = 'block';
+                } else {
+                    reasonSection.style.display = 'none';
+                    delete reasons[employeeId];
+                    document.getElementById(`reason_${employeeId}`).value = '';
+                }
+            } else {
+                delete ratings[employeeId];
+                reasonSection.style.display = 'none';
+                delete reasons[employeeId];
+            }
+            updateStats();
+        }
+
+        function updateReason(employeeId, reason) {
+            if (reason.trim()) {
+                reasons[employeeId] = reason.trim();
+            } else {
+                delete reasons[employeeId];
+            }
+        }
+
+        function updateStats() {
+            const totalEmployees = employees.length - 1;
+            const completedRatings = Object.keys(ratings).length;
+            const remainingRatings = totalEmployees - completedRatings;
+            const progressPercentage = (completedRatings / totalEmployees) * 100;
+            
+            document.getElementById('totalEmployees').textContent = totalEmployees;
+            document.getElementById('completedRatings').textContent = completedRatings;
+            document.getElementById('remainingRatings').textContent = remainingRatings;
+            document.getElementById('progressFill').style.width = progressPercentage + '%';
+        }
+
+        async function submitFeedback() {
+            const errorDiv = document.getElementById('feedbackError');
+            const successDiv = document.getElementById('successMessage');
+            
+            const totalEmployees = employees.length - 1;
+            const completedRatings = Object.keys(ratings).length;
+            
+            if (completedRatings < totalEmployees) {
+                showMessage(errorDiv, `You must rate ALL ${totalEmployees} employees before submitting. Currently rated: ${completedRatings}`, 'error');
+                return;
+            }
+            
+            const lowScores = Object.entries(ratings).filter(([id, rating]) => rating <= 3);
+            const missingReasons = lowScores.filter(([id, rating]) => !reasons[id] || reasons[id].trim() === '');
+            
+            if (missingReasons.length > 0) {
+                const employeeNames = missingReasons.map(([id, rating]) => {
+                    const emp = employees.find(e => e.id == id);
+                    return emp ? emp.name : `Employee #${id}`;
+                }).join(', ');
+                
+                showMessage(errorDiv, `Please provide reasons for low scores (≤3) given to: ${employeeNames}`, 'error');
+                return;
+            }
+            
+            hideMessage(errorDiv);
+            
+            const feedbackData = {
+                evaluator: {
+                    id: currentUser.id,
+                    name: currentUser.name,
+                    number: currentUser.number
+                },
+                ratings: ratings,
+                reasons: reasons,
+                timestamp: new Date().toISOString(),
+                completedAt: new Date().toLocaleString()
+            };
+            
+            try {
+                // Send to backend
+                const response = await fetch('/api/feedback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(feedbackData)
+                });
+                
+                if (response.ok) {
+                    showMessage(successDiv, `
+                        ✅ Feedback submitted successfully!<br>
+                        📊 You rated all ${totalEmployees} colleagues.<br>
+                        ⚠️ ${lowScores.length} low score(s) with reasons provided.<br>
+                        💾 Data saved to server.
+                    `, 'success');
+                    
+                    // Disable form
+                    document.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+                    document.querySelector('.submit-section button').disabled = true;
+                    document.querySelector('.submit-section button').textContent = 'Feedback Submitted';
+                } else {
+                    throw new Error('Server error');
+                }
+            } catch (error) {
+                // Fallback to local storage
+                const localData = JSON.parse(localStorage.getItem('feedbackData') || '{}');
+                localData[currentUser.id] = feedbackData;
+                localStorage.setItem('feedbackData', JSON.stringify(localData));
+                
+                showMessage(successDiv, `
+                    ✅ Feedback saved locally!<br>
+                    📊 You rated all ${totalEmployees} colleagues.<br>
+                    ⚠️ Server unavailable - data saved locally.
+                `, 'success');
+                
+                // Disable form
+                document.querySelectorAll('input, textarea').forEach(el => el.disabled = true);
+                document.querySelector('.submit-section button').disabled = true;
+                document.querySelector('.submit-section button').textContent = 'Feedback Submitted';
+            }
+        }
+
+        function showMessage(element, message, type) {
+            element.innerHTML = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+        }
+
+        function hideMessage(element) {
+            element.style.display = 'none';
+        }
+
+        // Initialize
+        console.log('Employee Feedback System initialized with', employees.length, 'employees');
+    </script>
+</body>
+</html>
