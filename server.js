@@ -92,9 +92,9 @@ app.get('/api/download-all', (req, res) => {
 // Helper function to get employee by ID
 function getEmployeeById(id) {
     const employees = [
-                    {id: 1, name: 'Jitendra Nikhade', number: 1}
-            {id: 2, name: 'Surekha Pande', number: 2}
-            {id: 3, name: 'Dattatray Raut', number: 3}
+            {id: 1, name: 'Jitendra Nikhade', number: 1},
+            {id: 2, name: 'Surekha Pande', number: 2},
+            {id: 3, name: 'Dattatray Raut', number: 3},
             {id: 4, name: 'Kalpana Chandele', number: 4},
             {id: 6, name: 'Pawan Kulthe', number: 6},
             {id: 7, name: 'Nitin Ambade', number: 7},
@@ -119,28 +119,28 @@ function getEmployeeById(id) {
             {id: 27, name: 'Nitish Halde', number: 27},
             {id: 28, name: 'Ajay Mahadole', number: 28},
             {id: 29, name: 'Mohan Nagpure', number: 29},
-            {id: 30, name: 'Paritosh Shukla', number: 30}
-            {id: 31, name: 'Antariksh Kumbhare', number: 31}
-            {id: 32, name: 'Shweta Lokhande', number: 32}
-            {id: 33, name: 'Bharat Nimaje', number: 33}
-            {id: 34, name: 'Chandrashekhar Ukey', number: 34}
-            {id: 35, name: 'Navkiran shirasakar', number: 35}
-            {id: 36, name: 'Prasanna Waradpande', number: 36}
-            {id: 37, name: 'Vijay Dhage', number: 37}
-            {id: 38, name: 'Manoj Shriwastav', number: 38}
-            {id: 39, name: 'Vilash Kedar', number: 39}
-            {id: 40, name: 'Gauri Zade', number: 40}
-            {id: 41, name: 'Santosh Ghatol', number: 41}
-            {id: 42, name: 'Hemant Bendale', number: 42}
-            {id: 43, name: 'Shubham Pajgade', number: 43}
-            {id: 44, name: 'Vikas Nandurkar', number: 44}
-           {id: 45, name: 'Najim Patel', number: 45}
-           {id: 46, name: 'Rahul Harinkhede', number: 46}
-           {id: 47, name: 'Suraj Phule', number: 47}
-           {id: 48, name: 'Prakash Tembhurne', number: 48}
-           {id: 49, name: 'Sanjay Malwe', number: 49}
-            {id: 50, name: 'Pradeep Wagh', number: 50}
-            {id: 51, name: 'Madhukar Tikhe', number: 51}
+            {id: 30, name: 'Paritosh Shukla', number: 30},
+            {id: 31, name: 'Antariksh Kumbhare', number: 31},
+            {id: 32, name: 'Shweta Lokhande', number: 32},
+            {id: 33, name: 'Bharat Nimaje', number: 33},
+            {id: 34, name: 'Chandrashekhar Ukey', number: 34},
+            {id: 35, name: 'Navkiran shirasakar', number: 35},
+            {id: 36, name: 'Prasanna Waradpande', number: 36},
+            {id: 37, name: 'Vijay Dhage', number: 37},
+            {id: 38, name: 'Manoj Shriwastav', number: 38},
+            {id: 39, name: 'Vilash Kedar', number: 39},
+            {id: 40, name: 'Gauri Zade', number: 40},
+            {id: 41, name: 'Santosh Ghatol', number: 41},
+            {id: 42, name: 'Hemant Bendale', number: 42},
+            {id: 43, name: 'Shubham Pajgade', number: 43},
+            {id: 44, name: 'Vikas Nandurkar', number: 44},
+           {id: 45, name: 'Najim Patel', number: 45},
+           {id: 46, name: 'Rahul Harinkhede', number: 46},
+           {id: 47, name: 'Suraj Phule', number: 47},
+           {id: 48, name: 'Prakash Tembhurne', number: 48},
+           {id: 49, name: 'Sanjay Malwe', number: 49},
+            {id: 50, name: 'Pradeep Wagh', number: 50},
+            {id: 51, name: 'Madhukar Tikhe', number: 51},
             {id: 74, name: 'Vilas Shette', number: 74}
     ];
     
