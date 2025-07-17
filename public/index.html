@@ -357,7 +357,7 @@
             
             document.getElementById('currentUser').innerHTML = `
                 <strong>Welcome, ${currentUser.name}!</strong><br>
-                Employee Number: ${currentUser.designation}
+                Employee designation: ${currentUser.designation}
             `;
             
             const otherEmployees = employees.filter(emp => emp.id !== currentUser.id);
@@ -368,7 +368,7 @@
                     <div class="employee-info">
                         <div>
                             <div class="employee-name">${emp.name}</div>
-                            <div class="employee-designation">Employee #${emp.designation}</div>
+                            <div class="employee-designation"> designation #${emp.designation}</div>
                         </div>
                         <div>
                             <label for="rating_${emp.id}">Rating:</label>
