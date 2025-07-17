@@ -261,7 +261,7 @@
     <script>
         // Employee data - 50 employees
         const employees = [
-            {id: 1, name: 'Jitendra Nikhade', number: 'Office Superintendent'},
+            {id: 1, name: 'Jitendra Nikhade', number: 1, designation: 'Office Superintendent'},
             {id: 2, name: 'Surekha Pande', number: 2},
             {id: 3, name: 'Dattatray Raut', number: 3},
             {id: 4, name: 'Kalpana Chandele', number: 4},
@@ -320,7 +320,7 @@
 
         function login() {
             const name = document.getElementById('employeeName').value.trim();
-            const number = parseInt(document.getElementById('Designation').value);
+            const number = parseInt(document.getElementById('employeeNumber').value);
             
             const errorDiv = document.getElementById('loginError');
             
@@ -357,7 +357,7 @@
             
             document.getElementById('currentUser').innerHTML = `
                 <strong>Welcome, ${currentUser.name}!</strong><br>
-                Employee Number: ${currentUser.number}
+                Employee Number: ${currentUser.designation}
             `;
             
             const otherEmployees = employees.filter(emp => emp.id !== currentUser.id);
@@ -368,7 +368,7 @@
                     <div class="employee-info">
                         <div>
                             <div class="employee-name">${emp.name}</div>
-                            <div class="employee-number">Employee #${emp.number}</div>
+                            <div class="employee-designation">Employee #${emp.designation}</div>
                         </div>
                         <div>
                             <label for="rating_${emp.id}">Rating:</label>
