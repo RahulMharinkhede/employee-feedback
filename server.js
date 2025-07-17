@@ -92,7 +92,7 @@ app.get('/api/download-all', (req, res) => {
 // Helper function to get employee by ID
 function getEmployeeById(id) {
     const employees = [
-            {id: 1, name: 'Jitendra Nikhade', number: 'Office Superintendent'},
+            {id: 1, name: 'Jitendra Nikhade', number: 1},
             {id: 2, name: 'Surekha Pande', number: 2},
             {id: 3, name: 'Dattatray Raut', number: 3},
             {id: 4, name: 'Kalpana Chandele', number: 4},
