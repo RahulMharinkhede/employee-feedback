@@ -96,6 +96,7 @@ function getEmployeeById(id) {
             {id: 2, name: 'Surekha Pande', number: 2},
             {id: 3, name: 'Dattatray Raut', number: 3},
             {id: 4, name: 'Kalpana Chandele', number: 4},
+            {id: 5, name: 'Nilesh Shekhar', number: 5},
             {id: 6, name: 'Pawan Kulthe', number: 6},
             {id: 7, name: 'Nitin Ambade', number: 7},
             {id: 8, name: 'Kiran Supe', number: 8},
@@ -141,6 +142,8 @@ function getEmployeeById(id) {
            {id: 49, name: 'Sanjay Malwe', number: 49},
             {id: 50, name: 'Pradeep Wagh', number: 50},
             {id: 51, name: 'Madhukar Tikhe', number: 51},
+            {id: 52, name: 'Suraj Dhone', number: 52},
+            {id: 53, name: 'Sandip Wadibhasme', number: 53},
             {id: 74, name: 'Vilas Shette', number: 74}
     ];
     
