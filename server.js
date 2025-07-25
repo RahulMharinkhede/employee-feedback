@@ -4,7 +4,8 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0'; // This is the key change!
 
 // Middleware
 app.use(cors());
@@ -150,9 +151,9 @@ function getEmployeeById(id) {
     return employees.find(emp => emp.id == id) || {name: 'Unknown', number: 0};
 }
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+// Start server - BINDING TO 0.0.0.0 IS CRUCIAL FOR CODESPACES
+app.listen(PORT, HOST, () => {
+    console.log(`Server running on http://${HOST}:${PORT}`);
     console.log(`Data will be saved to: ${dataDir}`);
     console.log('API endpoints:');
     console.log('- POST /api/feedback (submit feedback)');
