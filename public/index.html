@@ -458,7 +458,18 @@
                 showMessage(errorDiv, `Please provide reasons for low scores (≤3) given to: ${employeeNames}`, 'error');
                 return;
             }
+             const highScores = Object.entries(ratings).filter(([id, rating]) => rating >= 9);
+            const missingReasons = highScores.filter(([id, rating]) => !reasons[id] || reasons[id].trim() === '');
             
+            if (missingReasons.length > 0) {
+                const employeeNames = missingReasons.map(([id, rating]) => {
+                    const emp = employees.find(e => e.id == id);
+                    return emp ? emp.name : `Employee #${id}`;
+                }).join(', ');
+                
+                showMessage(errorDiv, `Please provide reasons for high scores (>=9) given to: ${employeeNames}`, 'error');
+                return;
+            }
             hideMessage(errorDiv);
             
             const feedbackData = {
@@ -488,6 +499,7 @@
                         ✅ Feedback submitted successfully!<br>
                         📊 You rated all ${totalEmployees} colleagues.<br>
                         ⚠️ ${lowScores.length} low score(s) with reasons provided.<br>
+                        ⚠️ ${highScores.length} high score(s) with reasons provided.<br>
                         💾 Data saved to server.
                     `, 'success');
                     
