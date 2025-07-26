@@ -40,6 +40,7 @@ app.post('/api/feedback', (req, res) => {
         Object.entries(feedbackData.ratings).forEach(([id, rating]) => {
             const emp = getEmployeeById(id);
             const reason = rating <= 3 ? (feedbackData.reasons[id] || 'No reason provided') : '';
+            const reason = rating >= 9 ? (feedbackData.reasons[id] || 'No reason provided') : '';
             const reasonFormatted = reason ? `"${reason.replace(/"/g, '""')}"` : '';
             
             csvContent += `"${emp.name}",${emp.number},${rating},${reasonFormatted},"${feedbackData.evaluator.name}",${feedbackData.evaluator.number},"${feedbackData.completedAt}"\n`;
